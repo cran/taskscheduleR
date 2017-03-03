@@ -1,0 +1,4 @@
+Name: Schedule R scripts on Windows
+Description: Use Windows task scheduler to schedule your R scripts (Windows)
+Binding: taskschedulerAddin
+Interactive: true
