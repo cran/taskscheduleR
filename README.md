@@ -33,9 +33,9 @@ taskscheduler_create(taskname = "myfancyscript", rscript = myscript,
 taskscheduler_create(taskname = "myfancyscriptdaily", rscript = myscript, 
                      schedule = "DAILY", starttime = "09:10", startdate = format(Sys.Date()+1, "%d/%m/%Y"))
 
-## Run every week on Sunday at 09:10
-taskscheduler_create(taskname = "myfancyscript_sun", rscript = myscript, 
-                     schedule = "WEEKLY", starttime = "09:10", days = 'SUN')
+## Run every week on Saturday and Sunday at 09:10
+taskscheduler_create(taskname = "myfancyscript_sunsat", rscript = myscript, 
+                     schedule = "WEEKLY", starttime = "09:10", days = c('SUN', 'SAT'))
 
 ## Run every 5 minutes, starting from 10:40
 taskscheduler_create(taskname = "myfancyscript_5min", rscript = myscript,
@@ -55,7 +55,7 @@ str(tasks)
 ## delete the tasks
 taskscheduler_delete(taskname = "myfancyscript")
 taskscheduler_delete(taskname = "myfancyscriptdaily")
-taskscheduler_delete(taskname = "myfancyscript_sun")
+taskscheduler_delete(taskname = "myfancyscript_sunsat")
 taskscheduler_delete(taskname = "myfancyscript_5min")
 taskscheduler_delete(taskname = "myfancyscript_withargs_a")
 taskscheduler_delete(taskname = "myfancyscript_withargs_b")
@@ -81,16 +81,10 @@ Mark that the date format is the date format in Belgium. Change once to your loc
 Install
 -----------
 
-Install the latest version from github:
-```
-devtools::install_github("bnosac/taskscheduleR")
-```
+The package is on CRAN. To install, just run:
 
-Or from www.datatailor.be
 ```
-install.packages('data.table')
-install.packages('knitr')
-install.packages("taskscheduleR", repos = "http://www.datatailor.be/rcube", type = "source")
+install.packages("taskscheduleR")
 ```
 
 If you want the RStudio add-in to work, also install miniUI and shiny
@@ -98,6 +92,9 @@ If you want the RStudio add-in to work, also install miniUI and shiny
 install.packages('miniUI')
 install.packages('shiny')
 ```
+
+For installing the development version of this package: `devtools::install_github("bnosac/taskscheduleR", build_vignettes = TRUE)`
+
 
 Mark on administrator rights
 -----------
@@ -110,5 +107,7 @@ If you are using RStudio, you might need to start RStudio as admin, on Windows t
 Mark on error messages
 -----------
 
-You can only have one task with the same name, make sure you use taskscheduler_delete the task if you are planning to create a new task with the same name.
+- You can only have one task with the same name, make sure you use taskscheduler_delete the task if you are planning to create a new task with the same name.
+- Tasks are only run if your computer is on and your cable is plugged in
+- Consider using the `startdate` argument of `taskscheduler_create` (scheduling something at 9/2/2018 means something different than 2/9/2018 depending on your locale)
 

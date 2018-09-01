@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jan Wijffels" />
 
-<meta name="date" content="2017-11-16" />
+<meta name="date" content="2018-09-01" />
 
 <title>taskscheduleR</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">taskscheduleR</h1>
 <h4 class="author"><em>Jan Wijffels</em></h4>
-<h4 class="date"><em>2017-11-16</em></h4>
+<h4 class="date"><em>2018-09-01</em></h4>
 
 
 
@@ -98,16 +98,16 @@ myscript &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span
 
 ## run script once within 62 seconds
 <span class="kw">taskscheduler_create</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript&quot;</span>, <span class="dt">rscript =</span> myscript, 
-                     <span class="dt">schedule =</span> <span class="st">&quot;ONCE&quot;</span>, <span class="dt">starttime =</span> <span class="kw">format</span>(<span class="kw">Sys.time</span>() +<span class="st"> </span><span class="dv">62</span>, <span class="st">&quot;%H:%M&quot;</span>))
+                     <span class="dt">schedule =</span> <span class="st">&quot;ONCE&quot;</span>, <span class="dt">starttime =</span> <span class="kw">format</span>(<span class="kw">Sys.time</span>() <span class="op">+</span><span class="st"> </span><span class="dv">62</span>, <span class="st">&quot;%H:%M&quot;</span>))
 
 ## Run every day at the same time on 09:10, starting from tomorrow on
 ## Mark: change the format of startdate to your locale if needed (e.g. US: %m/%d/%Y)
 <span class="kw">taskscheduler_create</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscriptdaily&quot;</span>, <span class="dt">rscript =</span> myscript, 
-                     <span class="dt">schedule =</span> <span class="st">&quot;DAILY&quot;</span>, <span class="dt">starttime =</span> <span class="st">&quot;09:10&quot;</span>, <span class="dt">startdate =</span> <span class="kw">format</span>(<span class="kw">Sys.Date</span>()+<span class="dv">1</span>, <span class="st">&quot;%d/%m/%Y&quot;</span>))
+                     <span class="dt">schedule =</span> <span class="st">&quot;DAILY&quot;</span>, <span class="dt">starttime =</span> <span class="st">&quot;09:10&quot;</span>, <span class="dt">startdate =</span> <span class="kw">format</span>(<span class="kw">Sys.Date</span>()<span class="op">+</span><span class="dv">1</span>, <span class="st">&quot;%d/%m/%Y&quot;</span>))
 
-## Run every week on Sunday at 09:10
-<span class="kw">taskscheduler_create</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_sun&quot;</span>, <span class="dt">rscript =</span> myscript, 
-                     <span class="dt">schedule =</span> <span class="st">&quot;WEEKLY&quot;</span>, <span class="dt">starttime =</span> <span class="st">&quot;09:10&quot;</span>, <span class="dt">days =</span> <span class="st">'SUN'</span>)
+## Run every week on Saturday and Sunday at 09:10
+<span class="kw">taskscheduler_create</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_sunsat&quot;</span>, <span class="dt">rscript =</span> myscript, 
+                     <span class="dt">schedule =</span> <span class="st">&quot;WEEKLY&quot;</span>, <span class="dt">starttime =</span> <span class="st">&quot;09:10&quot;</span>, <span class="dt">days =</span> <span class="kw">c</span>(<span class="st">'SUN'</span>, <span class="st">'SAT'</span>))
 
 ## Run every 5 minutes, starting from 10:40
 <span class="kw">taskscheduler_create</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_5min&quot;</span>, <span class="dt">rscript =</span> myscript,
@@ -126,7 +126,7 @@ tasks &lt;-<span class="st"> </span><span class="kw">taskscheduler_ls</span>()
 ## delete the tasks
 <span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript&quot;</span>)
 <span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscriptdaily&quot;</span>)
-<span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_sun&quot;</span>)
+<span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_sunsat&quot;</span>)
 <span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_5min&quot;</span>)
 <span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_withargs_a&quot;</span>)
 <span class="kw">taskscheduler_delete</span>(<span class="dt">taskname =</span> <span class="st">&quot;myfancyscript_withargs_b&quot;</span>)</code></pre></div>

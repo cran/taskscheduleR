@@ -17,9 +17,9 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE, eval = FALSE)
 #  taskscheduler_create(taskname = "myfancyscriptdaily", rscript = myscript,
 #                       schedule = "DAILY", starttime = "09:10", startdate = format(Sys.Date()+1, "%d/%m/%Y"))
 #  
-#  ## Run every week on Sunday at 09:10
-#  taskscheduler_create(taskname = "myfancyscript_sun", rscript = myscript,
-#                       schedule = "WEEKLY", starttime = "09:10", days = 'SUN')
+#  ## Run every week on Saturday and Sunday at 09:10
+#  taskscheduler_create(taskname = "myfancyscript_sunsat", rscript = myscript,
+#                       schedule = "WEEKLY", starttime = "09:10", days = c('SUN', 'SAT'))
 #  
 #  ## Run every 5 minutes, starting from 10:40
 #  taskscheduler_create(taskname = "myfancyscript_5min", rscript = myscript,
@@ -38,7 +38,7 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE, eval = FALSE)
 #  ## delete the tasks
 #  taskscheduler_delete(taskname = "myfancyscript")
 #  taskscheduler_delete(taskname = "myfancyscriptdaily")
-#  taskscheduler_delete(taskname = "myfancyscript_sun")
+#  taskscheduler_delete(taskname = "myfancyscript_sunsat")
 #  taskscheduler_delete(taskname = "myfancyscript_5min")
 #  taskscheduler_delete(taskname = "myfancyscript_withargs_a")
 #  taskscheduler_delete(taskname = "myfancyscript_withargs_b")
