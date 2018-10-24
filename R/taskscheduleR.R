@@ -5,19 +5,21 @@
 #' 
 #' @return a data.frame with scheduled tasks as returned by schtasks /Query for which the Taskname or second
 #' column in the dataset the preceding \\ is removed
+#' @param encoding encoding of the CSV which schtasks.exe generates. Defaults to UTF-8.
 #' @param ... optional arguments passed on to \code{fread} in order to read in the CSV file which schtasks generates
 #' @export
 #' @examples 
 #' x <- taskscheduler_ls()
 #' x
-taskscheduler_ls <- function(...){
+taskscheduler_ls <- function(encoding = 'UTF-8', ...){
+  change_code_page <- system("chcp 65001", intern = TRUE)
   cmd <- sprintf('schtasks /Query /FO CSV /V')
   x <- system(cmd, intern = TRUE)
   f <- tempfile()
   writeLines(x, f)
-  x <- try(data.table::fread(f, ...), silent = TRUE)
+  x <- try(data.table::fread(f, encoding = encoding, ...), silent = TRUE)
   if(inherits(x, "try-error")){
-    x <- utils::read.csv(f, check.names = FALSE, stringsAsFactors=FALSE, ...)
+    x <- utils::read.csv(f, check.names = FALSE, stringsAsFactors=FALSE, encoding = encoding, ...)
   }
   x <- data.table::setDF(x)
   if("TaskName" %in% names(x)){
@@ -201,21 +203,23 @@ taskscheduler_delete <- function(taskname){
 #' 
 #' @param taskname the name of the task to run. See the example.
 #' @return the system call to schtasks /Run 
-#' @export
+#' @export taskscheduler_runnow
+#' @export taskcheduler_runnow
+#' @aliases taskcheduler_runnow
 #' @examples 
 #' \dontrun{
 #' myscript <- system.file("extdata", "helloworld.R", package = "taskscheduleR")
 #' taskscheduler_create(taskname = "myfancyscript", rscript = myscript, 
 #'  schedule = "ONCE", starttime = format(Sys.time() + 10*60, "%H:%M"))
 #' 
-#' taskcheduler_runnow("myfancyscript")
+#' taskscheduler_runnow("myfancyscript")
 #' Sys.sleep(5)
-#' taskcheduler_stop("myfancyscript")
+#' taskscheduler_stop("myfancyscript")
 #' 
 #' 
 #' taskscheduler_delete(taskname = "myfancyscript")
 #' }
-taskcheduler_runnow <- function(taskname){
+taskscheduler_runnow <- function(taskname){
   cmd <- sprintf('schtasks /Run /TN %s', shQuote(taskname, type = "cmd"))
   system(cmd, intern = FALSE)
 }
@@ -226,23 +230,34 @@ taskcheduler_runnow <- function(taskname){
 #' 
 #' @param taskname the name of the task to stop. See the example.
 #' @return the system call to schtasks /End 
-#' @export
+#' @export taskscheduler_stop
+#' @export taskcheduler_stop
+#' @aliases taskcheduler_stop
 #' @examples 
 #' \dontrun{
 #' myscript <- system.file("extdata", "helloworld.R", package = "taskscheduleR")
 #' taskscheduler_create(taskname = "myfancyscript", rscript = myscript, 
 #'  schedule = "ONCE", starttime = format(Sys.time() + 10*60, "%H:%M"))
 #' 
-#' taskcheduler_runnow("myfancyscript")
+#' taskscheduler_runnow("myfancyscript")
 #' Sys.sleep(5)
-#' taskcheduler_stop("myfancyscript")
+#' taskscheduler_stop("myfancyscript")
 #' 
 #' 
 #' taskscheduler_delete(taskname = "myfancyscript")
 #' }
-taskcheduler_stop <- function(taskname){
+taskscheduler_stop <- function(taskname){
   cmd <- sprintf('schtasks /End /TN %s', shQuote(taskname, type = "cmd"))
   system(cmd, intern = FALSE)
 }
 
 
+taskcheduler_stop <- function(taskname){
+  .Deprecated("taskscheduler_stop", msg = "Use taskscheduler_stop instead of taskcheduler_stop")
+  taskscheduler_stop(taskname)
+} 
+
+taskcheduler_runnow <- function(taskname){
+  .Deprecated("taskscheduler_stop", msg = "Use taskscheduler_runnow instead of taskcheduler_runnow")
+  taskscheduler_runnow(taskname)
+}
