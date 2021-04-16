@@ -1,10 +1,10 @@
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 
-## ---- include = FALSE----------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE, eval = FALSE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 #  library(taskscheduleR)
 #  myscript <- system.file("extdata", "helloworld.R", package = "taskscheduleR")
 #  
@@ -43,7 +43,7 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE, eval = FALSE)
 #  taskscheduler_delete(taskname = "myfancyscript_withargs_a")
 #  taskscheduler_delete(taskname = "myfancyscript_withargs_b")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 #  ## log file is at the place where the helloworld.R script was located
 #  system.file("extdata", "helloworld.log", package = "taskscheduleR")
 
